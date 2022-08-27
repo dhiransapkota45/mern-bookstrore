@@ -81,13 +81,31 @@ class Bookcontoller {
       }
 
       const deleteInfo = await bookModel.deleteOne({ _id: id });
-      return res
-        .status(200)
-        .json({
-          success: true,
-          msg: "book details has been deleted successfully!",
-          deleteInfo,
-        });
+      return res.status(200).json({
+        success: true,
+        msg: "book details has been deleted successfully!",
+        deleteInfo,
+      });
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  }
+
+  async searchBook(req, res) {
+    try {
+      const { query } = req.query;
+      console.log(req.url);
+      console.log(query);
+      if (!query) {
+        return res.status(400).json({ success: false, msg: "query not found" });
+      }
+
+      const searchResult = await bookModel.find({$or:[{name:{$regex:".*"+query+".*"}}, {genre:{$regex:".*"+query+".*"}}]})
+      if(searchResult.length == 0){
+        return res.json({success:false, msg:"nothing found of that query"})
+      }
+      return res.status(200).json({success:true, msg:"search has been successful", searchResult})
+
     } catch (error) {
       return res.status(400).json(error);
     }

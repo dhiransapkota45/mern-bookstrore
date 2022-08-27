@@ -26,7 +26,7 @@ const upload = multer({ storage });
 const bookcontoller = new Bookcontoller();
 
 //add a new book to the db
-router.post("/add", addFileValidate, upload.single("image"), (req, res) => {
+router.post("/add", upload.single("image"), (req, res) => {
   console.log(req.body);
   bookcontoller.addBook(req, res, imagename);
 });
@@ -39,5 +39,8 @@ router.put("/update/:id", bookcontoller.updateBook);
 
 //delte book details
 router.delete("/delete/:id", bookcontoller.deleteBook)
+
+//search the required book
+router.get("/search", bookcontoller.searchBook)
 
 module.exports = router;
