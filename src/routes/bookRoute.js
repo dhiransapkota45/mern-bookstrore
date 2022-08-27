@@ -31,6 +31,9 @@ router.post("/add", upload.single("image"), (req, res) => {
   bookcontoller.addBook(req, res, imagename);
 });
 
+//search the required book
+router.get("/search", bookcontoller.searchBook)
+
 //get book from db
 router.get("/:id", bookcontoller.getBookById);
 
@@ -40,7 +43,7 @@ router.put("/update/:id", bookcontoller.updateBook);
 //delte book details
 router.delete("/delete/:id", bookcontoller.deleteBook)
 
-//search the required book
-router.get("/search", bookcontoller.searchBook)
+//find book as given limit
+router.get("/", bookcontoller.findLimitBooks)
 
 module.exports = router;

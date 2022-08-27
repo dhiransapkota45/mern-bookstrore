@@ -100,14 +100,34 @@ class Bookcontoller {
         return res.status(400).json({ success: false, msg: "query not found" });
       }
 
-      const searchResult = await bookModel.find({$or:[{name:{$regex:".*"+query+".*"}}, {genre:{$regex:".*"+query+".*"}}]})
-      if(searchResult.length == 0){
-        return res.json({success:false, msg:"nothing found of that query"})
+      const searchResult = await bookModel.find({
+        $or: [
+          { name: { $regex: ".*" + query + ".*" } },
+          { genre: { $regex: ".*" + query + ".*" } },
+        ],
+      });
+      if (searchResult.length == 0) {
+        return res.json({ success: false, msg: "nothing found of that query" });
       }
-      return res.status(200).json({success:true, msg:"search has been successful", searchResult})
-
+      return res.status(200).json({
+        success: true,
+        msg: "search has been successful",
+        searchResult,
+      });
     } catch (error) {
       return res.status(400).json(error);
+    }
+  }
+
+  async findLimitBooks(req, res) {
+    try {
+      let limit = req.query.limit ? req.query.limit : 10;
+
+      const foundBooks = await bookModel.find({}).limit(limit)
+      return res.json({success:true, msg:"books found", foundBooks})
+
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
     }
   }
 }
