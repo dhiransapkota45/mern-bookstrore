@@ -94,8 +94,8 @@ class Bookcontoller {
   async searchBook(req, res) {
     try {
       const { query } = req.query;
-      console.log(req.url);
-      console.log(query);
+      // console.log(req.url);
+      // console.log(query);
       if (!query) {
         return res.status(400).json({ success: false, msg: "query not found" });
       }
@@ -109,21 +109,33 @@ class Bookcontoller {
       if (searchResult.length == 0) {
         return res.json({ success: false, msg: "nothing found of that query" });
       }
+      for(let i in searchResult){
+
+        if(searchResult[i].image){
+          searchResult[i].image = `http://localhost:8000/${searchResult[i].image}`
+        }
+      }
       return res.status(200).json({
         success: true,
         msg: "search has been successful",
         searchResult,
       });
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({success:false, msg:"some error occured", error});
     }
   }
 
   async findLimitBooks(req, res) {
     try {
-      let limit = req.query.limit ? req.query.limit : 10;
+      let limit = req.query.limit ? req.query.limit : 20;
 
       const foundBooks = await bookModel.find({}).limit(limit)
+      for(let i in foundBooks){
+
+        if(foundBooks[i].image){
+          foundBooks[i].image = `http://localhost:8000/${foundBooks[i].image}`
+        }
+      }
       return res.json({success:true, msg:"books found", foundBooks})
 
     } catch (error) {

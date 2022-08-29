@@ -1,0 +1,32 @@
+.homepage{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-wrap: wrap;
+ }
+.card{
+    width: 400px;
+    font-size: 18px;
+    margin: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    color: green;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 10px;
+}
+img{
+    width: 300px;
+
+}
+.searchdiv{
+    display: flex;
+    justify-content: center;
+}
+.search{
+    border: 2px solid gray;
+    border-radius: 20px;
+    margin-top: 50px;
+    width: 500px;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 10px;
+}

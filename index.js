@@ -6,6 +6,9 @@ const bodyParser = require("body-parser")
 require("./src/database/db");
 const cors = require("cors");
 
+
+
+app.use(express.static("public/upload"))
 app.use(cors({
   origin:"http://localhost:3000"
 }))
